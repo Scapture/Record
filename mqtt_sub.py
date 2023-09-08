@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import record
 import threading
 
+# 변경
 mqtt_broker = "localhost"
 topic = "record"
 
