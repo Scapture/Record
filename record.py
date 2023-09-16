@@ -24,8 +24,8 @@ def run():
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'XVID')  # 비디오 코덱 설정
         fps = 30.0
-        width = 1920
-        height = 1440
+        width = 640
+        height = 480
 
         print("Video: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # 비디오 생성 객체 
