@@ -64,8 +64,11 @@ def run():
 
             # 프레임을 녹화 파일에 추가합니다.
             # outGoalLine.write(frame1)
-            outLeft.write(frame2)
-            outRight.write(frame3)
+
+            frame_resized2 = cv2.resize(frame2, (width, height))
+            frame_resized3 = cv2.resize(frame2, (width, height))
+            outLeft.write(frame_resized2)
+            outRight.write(frame_resized3)
 
         # outGoalLine.release()
         outLeft.release()
