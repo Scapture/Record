@@ -23,11 +23,11 @@ def run():
 
         capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-        capLeft.set(cv2.CAP_PROP_FPS, 30.0)
+        capLeft.set(cv2.CAP_PROP_FPS, 30)
 
         capRight.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-        capRight.set(cv2.CAP_PROP_FPS, 30.0)
+        capRight.set(cv2.CAP_PROP_FPS, 30)
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
