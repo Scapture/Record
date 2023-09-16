@@ -21,6 +21,9 @@ def run():
         capLeft = cv2.VideoCapture(0) 
         capRight = cv2.VideoCapture(2) 
 
+        capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
         fps = 30.0
@@ -30,8 +33,8 @@ def run():
         print("Video: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # 비디오 생성 객체 
         # outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, capGoalLine.get(cv2.CAP_PROP_FPS), (capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH), capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
-        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, fps*0.3, (width,height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
-        outRight = cv2.VideoWriter('output/right.mp4', fourcc, fps*0.3, (width, height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, fps, (width,height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        outRight = cv2.VideoWriter('output/right.mp4', fourcc, fps, (width, height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
 
         while True:
             # 프레임을 읽어옵니다.
@@ -65,9 +68,9 @@ def run():
             # 프레임을 녹화 파일에 추가합니다.
             # outGoalLine.write(frame1)
 
-            frame_resized2 = cv2.resize(frame2, (width, height))
+            # frame_resized2 = cv2.resize(frame2, (width, height))
             frame_resized3 = cv2.resize(frame3, (width, height))
-            outLeft.write(frame_resized2)
+            outLeft.write(frame2)
             outRight.write(frame_resized3)
 
         # outGoalLine.release()
