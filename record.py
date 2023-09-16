@@ -66,7 +66,7 @@ def run():
             # outGoalLine.write(frame1)
 
             frame_resized2 = cv2.resize(frame2, (width, height))
-            frame_resized3 = cv2.resize(frame2, (width, height))
+            frame_resized3 = cv2.resize(frame3, (width, height))
             outLeft.write(frame_resized2)
             outRight.write(frame_resized3)
 
