@@ -1,4 +1,4 @@
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt_client
 import record
 import threading
 
@@ -22,7 +22,7 @@ def on_message(client, userdata, msg):
         record.stop_recording()
         print("Stop recording")
 
-client = mqtt.Client()
+client = mqtt_client.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
