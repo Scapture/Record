@@ -44,13 +44,13 @@ def run():
             # stop_recording() 을 통해 recording이 False가 되면 종료
             if not recording:
                 print("record.py: stop")
-                cv2.destroyAllWindows()  # 모든 이미지 창을 닫습니다.
+                # cv2.destroyAllWindows()  # 모든 이미지 창을 닫습니다.
                 break
         
             # 프레임을 화면에 표시합니다, 나중에 삭제 가능
-            cv2.imshow('Webcam1 Recording', frame1)
-            cv2.imshow('Webcam2 Recording', frame2)
-            cv2.imshow('Webcam3 Recording', frame3)
+            # cv2.imshow('Webcam1 Recording', frame1)
+            # cv2.imshow('Webcam2 Recording', frame2)
+            # cv2.imshow('Webcam3 Recording', frame3)
 
             # 프레임을 녹화 파일에 추가합니다.
             outGoalLine.write(frame1)
