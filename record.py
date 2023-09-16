@@ -23,6 +23,11 @@ def run():
 
         capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        capLeft.set(cv2.CAP_PROP_FPS, 30.0)
+
+        capRight.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        capRight.set(cv2.CAP_PROP_FPS, 30.0)
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
@@ -68,10 +73,8 @@ def run():
             # 프레임을 녹화 파일에 추가합니다.
             # outGoalLine.write(frame1)
 
-            # frame_resized2 = cv2.resize(frame2, (width, height))
-            frame_resized3 = cv2.resize(frame3, (width, height))
             outLeft.write(frame2)
-            outRight.write(frame_resized3)
+            outRight.write(frame3)
 
         # outGoalLine.release()
         outLeft.release()
