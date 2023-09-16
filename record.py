@@ -18,8 +18,8 @@ def run():
     if recording:
         # 카메라 객체 생성, 변경
         capGoalLine = cv2.VideoCapture(0)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
-        capLeft = cv2.VideoCapture(1) 
-        capRight = cv2.VideoCapture(2) 
+        capLeft = cv2.VideoCapture(2) 
+        capRight = cv2.VideoCapture(3) 
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'XVID')  # 비디오 코덱 설정
@@ -39,6 +39,10 @@ def run():
             ret3, frame3 = capRight.read()
 
             if cv2.waitKey(1) & 0xFF == ord('q'):  # 'q' 키를 누르면 루프를 종료합니다.
+                break
+
+            if not ret1 or not ret2 or not ret3:
+                print("Failed to capture frames from cameras.")
                 break
 
             # stop_recording() 을 통해 recording이 False가 되면 종료
