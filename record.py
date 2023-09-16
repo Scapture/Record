@@ -17,8 +17,8 @@ def start_recording():
 def run():
     if recording:
         # 카메라 객체 생성, 변경
-        capGoalLine = cv2.VideoCapture(1)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
-        capLeft = cv2.VideoCapture(2) 
+        capGoalLine = cv2.VideoCapture(0)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
+        capLeft = cv2.VideoCapture(1) 
         # capRight = cv2.VideoCapture(1) 
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
