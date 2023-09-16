@@ -41,10 +41,15 @@ def run():
             if cv2.waitKey(1) & 0xFF == ord('q'):  # 'q' 키를 누르면 루프를 종료합니다.
                 break
 
-            if not ret1 or not ret2 or not ret3:
-                print("Failed to capture frames from cameras.")
+            if not ret1:
+                print("Failed GoalLine.")
                 break
-
+            if not ret2:
+                print("Failed left.")
+                break
+            if not ret3:
+                print("Failed right.")
+                break
             # stop_recording() 을 통해 recording이 False가 되면 종료
             if not recording:
                 print("record.py: stop")
