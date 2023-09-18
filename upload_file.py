@@ -4,7 +4,7 @@ import mqtt_pub
 
 def run():
     # 변경
-    ftp = FTP('192.168.0.4')
+    ftp = FTP('192.168.0.20')
     # 변경(현재 FTP id,pw 입력)
     ftp.login(user='scapture', passwd='1234')
     
