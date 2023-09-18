@@ -77,8 +77,7 @@ def run():
             # cv2.imshow('Webcam3 Recording', frame3)
 
             # 프레임을 녹화 파일에 추가합니다.
-            # outGoalLine.write(frame1)
-
+            outGoalLine.write(frame1)
             outLeft.write(frame2)
             outRight.write(frame3)
 
