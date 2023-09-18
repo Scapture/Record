@@ -35,7 +35,7 @@ def run():
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
-        fps = 15
+        fps = 5
         width = 1920
         height = 1080
 
