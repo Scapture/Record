@@ -35,7 +35,9 @@ def run():
         width = 1920
         height = 1080
 
-        print("Video: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        print("capGoalLine: ", capGoalLine.get(cv2.CAP_PROP_FPS), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        print("capLeft: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        print("capRight: ", capRight.get(cv2.CAP_PROP_FPS), ", ", capRight.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # 비디오 생성 객체 
         outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, capGoalLine.get(cv2.CAP_PROP_FPS), (capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH), capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
         outLeft = cv2.VideoWriter('output/left.mp4', fourcc, fps, (width,height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
