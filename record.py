@@ -17,25 +17,33 @@ def start_recording():
 def run():
     if recording:
         # 카메라 객체 생성, 변경
-        capGoalLine = cv2.VideoCapture(4)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
-        capLeft = cv2.VideoCapture(3) 
-        capRight = cv2.VideoCapture(2) 
+        capGoalLine = cv2.VideoCapture(0)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
+        capLeft = cv2.VideoCapture(1) 
+        capRight = cv2.VideoCapture(2)
 
-        capGoalLine.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        capGoalLine.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-        capGoalLine.set(cv2.CAP_PROP_FPS, 30)
+        if(capGoalLine.isOpened()):
+            print("GoalLine OK")
+        if(capLeft.isOpened()):
+            print("Left OK")
+        if(capRight.isOpened()):
+            print("Right OK")
+        
 
-        capLeft.set(cv2.CAP_PROP_FPS, 30)
-        capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        # capGoalLine.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        # capGoalLine.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        # capGoalLine.set(cv2.CAP_PROP_FPS, 24)
 
-        capRight.set(cv2.CAP_PROP_FPS, 30)
-        capRight.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        # capLeft.set(cv2.CAP_PROP_FPS, 24)
+        # capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        # capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+        # capRight.set(cv2.CAP_PROP_FPS, 24)
+        # capRight.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        # capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
-        fps = 30
+        fps = 9
         width = 1920
         height = 1080
 
@@ -43,15 +51,18 @@ def run():
         print("capLeft: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
         print("capRight: ", capRight.get(cv2.CAP_PROP_FPS), ", ", capRight.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # 비디오 생성 객체 
-        outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, fps, (width, height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
-        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(fps), (int(width),int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
-        outRight = cv2.VideoWriter('output/right.mp4', fourcc,  int(fps), (int(width),int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
+        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+
 
         while True:
             # 프레임을 읽어옵니다.
             ret1, frame1 = capGoalLine.read()
             ret2, frame2 = capLeft.read()
             ret3, frame3 = capRight.read()
+
+            print(ret1, ", ", ret2, ", ", ret3)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):  # 'q' 키를 누르면 루프를 종료합니다.
                 break
@@ -72,9 +83,9 @@ def run():
                 break
         
             # 프레임을 화면에 표시합니다, 나중에 삭제 가능
-            cv2.imshow('Webcam1 Recording', frame1)
-            cv2.imshow('Webcam2 Recording', frame2)
-            cv2.imshow('Webcam3 Recording', frame3)
+            # cv2.imshow('Webcam1 Recording', frame1)
+            # cv2.imshow('Webcam2 Recording', frame2)
+            # cv2.imshow('Webcam3 Recording', frame3)
 
             # 프레임을 녹화 파일에 추가합니다.
             outGoalLine.write(frame1)
