@@ -42,7 +42,7 @@ def run():
         # capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 비디오 코덱 설정
+        fourcc = cv2.VideoWriter_fourcc(*'X264')  # 비디오 코덱 설정
         fps = 9
         width = 1920
         height = 1080
@@ -83,9 +83,9 @@ def run():
                 break
         
             # 프레임을 화면에 표시합니다, 나중에 삭제 가능
-            # cv2.imshow('Webcam1 Recording', frame1)
-            # cv2.imshow('Webcam2 Recording', frame2)
-            # cv2.imshow('Webcam3 Recording', frame3)
+            cv2.imshow('Webcam1 Recording', frame1)
+            cv2.imshow('Webcam2 Recording', frame2)
+            cv2.imshow('Webcam3 Recording', frame3)
 
             # 프레임을 녹화 파일에 추가합니다.
             outGoalLine.write(frame1)
