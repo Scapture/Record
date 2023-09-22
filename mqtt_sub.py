@@ -3,7 +3,7 @@ import record
 import threading
 
 # 변경
-mqtt_broker = "192.168.0.4"
+mqtt_broker = "192.168.1.11"
 topic = "record"
 
 def on_connect(client, userdata, flags, rc):

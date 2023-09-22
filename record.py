@@ -17,9 +17,9 @@ def start_recording():
 def run():
     if recording:
         # 카메라 객체 생성, 변경
-        capGoalLine = cv2.VideoCapture(0)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
+        capGoalLine = cv2.VideoCapture(2)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
         capLeft = cv2.VideoCapture(1) 
-        capRight = cv2.VideoCapture(3)
+        capRight = cv2.VideoCapture(0)
 
         if(capGoalLine.isOpened()):
             print("GoalLine OK")
@@ -43,18 +43,18 @@ def run():
 
         # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
         fourcc = cv2.VideoWriter_fourcc(*'X264')  # 비디오 코덱 설정
-        fps = 9
-        width = 1920
-        height = 1080
 
         print("capGoalLine: ", capGoalLine.get(cv2.CAP_PROP_FPS), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT))
         print("capLeft: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
         print("capRight: ", capRight.get(cv2.CAP_PROP_FPS), ", ", capRight.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # 비디오 생성 객체 
-        outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
-        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
-        outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        # outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
+        # outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        # outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
 
+        outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(capGoalLine.get(cv2.CAP_PROP_FPS)), (int(capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT))))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
+        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(capLeft.get(cv2.CAP_PROP_FPS)), (int(capLeft.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT)))) # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+        outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(capRight.get(cv2.CAP_PROP_FPS)), (int(capRight.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))))
 
         while True:
             # 프레임을 읽어옵니다.
