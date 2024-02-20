@@ -1,102 +1,90 @@
 import cv2
-import upload_file
 
-# 녹화 시작 및 종료를 위한 상태 변환
-recording = False
 
-# mqtt_sub.py에서 녹화 종료를 위한 코드
-def stop_recording():
-    global recording
-    recording = False
+capGoalLine = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.57:554/stream1/out.h265")
+capLeft = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.58:554/stream1/out.h265")
+capRight = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.59:554/stream1/out.h265")
 
-# mqtt_sub.py에서 녹화 시작을 위한 코드
-def start_recording():
-    global recording
-    recording = True
+capGoalLine2 = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.14:554/stream1/out.h265")
+capLeft2 = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.15:554/stream1/out.h265")
+capRight2 = cv2.VideoCapture("rtsp://admin:asdf1346@@192.168.0.16:554/stream1/out.h265")
 
-def run():
-    if recording:
-        # 카메라 객체 생성, 변경
-        capGoalLine = cv2.VideoCapture(3)  # 0은 기본 웹캠을 나타냅니다. 다른 웹캠을 사용하려면 적절한 인덱스를 사용하세요.
-        capLeft = cv2.VideoCapture(1) 
-        capRight = cv2.VideoCapture(0)
+if(capGoalLine.isOpened()):
+    print("GoalLine OK")
+if(capLeft.isOpened()):
+    print("Left OK")
+if(capRight.isOpened()):
+    print("Right OK")
+if(capGoalLine2.isOpened()):
+    print("GoalLine2 OK")
+if(capLeft2.isOpened()):
+    print("Left2 OK")
+if(capRight2.isOpened()):
+    print("Right2 OK")
 
-        if(capGoalLine.isOpened()):
-            print("GoalLine OK")
-        if(capLeft.isOpened()):
-            print("Left OK")
-        if(capRight.isOpened()):
-            print("Right OK")
-        
+# 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
+fourcc = cv2.VideoWriter_fourcc(*'X264')  # 비디오 코덱 설정
+width = capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT)
+fps= capGoalLine.get(cv2.CAP_PROP_FPS)
 
-        # capGoalLine.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        # capGoalLine.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-        # capGoalLine.set(cv2.CAP_PROP_FPS, 24)
+# 비디오 생성 객체 
+outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, fps, (width, height))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
+outLeft = cv2.VideoWriter('output/left.mp4', fourcc, fps, (width, height)) # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+outRight = cv2.VideoWriter('output/right.mp4', fourcc, fps, (width, height))
 
-        # capLeft.set(cv2.CAP_PROP_FPS, 24)
-        # capLeft.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        # capLeft.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+outGoalLine2 = cv2.VideoWriter('output/goalline.mp4', fourcc, fps, (width, height))
+outLeft2 = cv2.VideoWriter('output/left.mp4', fourcc, fps, (width, height)) # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+outRight2 = cv2.VideoWriter('output/right.mp4', fourcc, fps, (width, height))
+while True:
+    # 프레임을 읽어옵니다.
+    ret1, frame1 = capGoalLine.read()
+    ret2, frame2 = capLeft.read()
+    ret3, frame3 = capRight.read()
 
-        # capRight.set(cv2.CAP_PROP_FPS, 24)
-        # capRight.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        # capRight.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    ret4, frame4 = capGoalLine.read()
+    ret5, frame5 = capLeft.read()
+    ret6, frame6 = capRight.read()
 
-        # 영상 초기 설정, fps,width, height 값을 적절하게 맞추어야 함.
-        fourcc = cv2.VideoWriter_fourcc(*'X264')  # 비디오 코덱 설정
+    print(ret1, ", ", ret2, ", ", ret3)
+    if cv2.waitKey(1) & 0xFF == ord('q'):  # 'q' 키를 누르면 루프를 종료합니다.
+        break
+    if not ret1:
+        print("Failed GoalLine.")
+        break
+    if not ret2:
+        print("Failed left.")
+        break
+    if not ret3:
+        print("Failed right.")
+        break
 
-        print("capGoalLine: ", capGoalLine.get(cv2.CAP_PROP_FPS), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        print("capLeft: ", capLeft.get(cv2.CAP_PROP_FPS), ", ", capLeft.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        print("capRight: ", capRight.get(cv2.CAP_PROP_FPS), ", ", capRight.get(cv2.CAP_PROP_FRAME_WIDTH), ", ", capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        # 비디오 생성 객체 
-        # outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
-        # outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
-        # outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(fps)*0.8, (int(width), int(height)))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
+    # 프레임을 화면에 표시합니다, 나중에 삭제 가능
+    cv2.imshow('Webcam1 Recording', frame1)
+    cv2.imshow('Webcam2 Recording', frame2)
+    cv2.imshow('Webcam3 Recording', frame3)
+    cv2.imshow('Webcam4 Recording', frame4)
+    cv2.imshow('Webcam5 Recording', frame5)
+    cv2.imshow('Webcam6 Recording', frame6)
 
-        outGoalLine = cv2.VideoWriter('output/goalline.mp4', fourcc, int(capGoalLine.get(cv2.CAP_PROP_FPS)), (int(capGoalLine.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capGoalLine.get(cv2.CAP_PROP_FRAME_HEIGHT))))  # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정    
-        outLeft = cv2.VideoWriter('output/left.mp4', fourcc, int(capLeft.get(cv2.CAP_PROP_FPS)), (int(capLeft.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capLeft.get(cv2.CAP_PROP_FRAME_HEIGHT)))) # 파일 이름, 코덱, 프레임 속도, 프레임 크기 설정
-        outRight = cv2.VideoWriter('output/right.mp4', fourcc, int(capRight.get(cv2.CAP_PROP_FPS)), (int(capRight.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capRight.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+    # 프레임을 녹화 파일에 추가합니다.
+    outGoalLine.write(frame1)
+    outLeft.write(frame2)
+    outRight.write(frame3)
+    outGoalLine2.write(frame4)
+    outLeft2.write(frame5)
+    outRight2.write(frame6)
 
-        while True:
-            # 프레임을 읽어옵니다.
-            ret1, frame1 = capGoalLine.read()
-            ret2, frame2 = capLeft.read()
-            ret3, frame3 = capRight.read()
+outGoalLine.release()
+outLeft.release()
+outRight.release()
+outGoalLine2.release()
+outLeft2.release()
+outRight2.release()
 
-            print(ret1, ", ", ret2, ", ", ret3)
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):  # 'q' 키를 누르면 루프를 종료합니다.
-                break
-
-            if not ret1:
-                print("Failed GoalLine.")
-                break
-            if not ret2:
-                print("Failed left.")
-                break
-            if not ret3:
-                print("Failed right.")
-                break
-            # stop_recording() 을 통해 recording이 False가 되면 종료
-            if not recording:
-                print("record.py: stop")
-                cv2.destroyAllWindows()  # 모든 이미지 창을 닫습니다.
-                break
-        
-            # 프레임을 화면에 표시합니다, 나중에 삭제 가능
-            cv2.imshow('Webcam1 Recording', frame1)
-            cv2.imshow('Webcam2 Recording', frame2)
-            cv2.imshow('Webcam3 Recording', frame3)
-
-            # 프레임을 녹화 파일에 추가합니다.
-            outGoalLine.write(frame1)
-            outLeft.write(frame2)
-            outRight.write(frame3)
-
-        outGoalLine.release()
-        outLeft.release()
-        outRight.release()
-        capGoalLine.release()
-        capLeft.release()
-        capRight.release()
-        # FTP 파일 전송
-        upload_file.run()
+capGoalLine.release()
+capLeft.release()
+capRight.release()
+capGoalLine2.release()
+capLeft2.release()
+capRight2.release()
